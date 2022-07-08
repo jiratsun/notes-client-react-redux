@@ -16,6 +16,7 @@ const CurrentList = ({ header }) => {
                 width: "460.75px",
                 marginTop: "14px",
                 height: "739.5px",
+                overflowY: "auto",
             }}
         >
             <div className="ui header">{header}</div>
