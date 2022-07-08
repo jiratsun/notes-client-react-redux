@@ -42,6 +42,7 @@ const renderInput = ({ input, meta, placeholder, onBlur }) => {
 };
 
 const NoteCreate = () => {
+    const [show, setShow] = useState(true);
     const [status, setStatus] = useState("");
     const [isFavorite, setIsFavorite] = useState(false);
     const notes = Object.values(useSelector((state) => state.notes));
@@ -62,74 +63,104 @@ const NoteCreate = () => {
     };
 
     return (
-        <div
-            className="ui segment"
-            style={{
-                position: "fixed",
-                zIndex: "2",
-                bottom: "0",
-                width: "949.5px",
-            }}
-        >
-            <Form
-                onSubmit={onFormSubmit}
-                mutators={{
-                    trimValue: ([field, _], state, { changeValue }) => {
-                        changeValue(state, field, (prev) => prev.trim());
-                    },
-                }}
-            >
-                {({ handleSubmit, form }) => (
-                    <form className="ui form" onSubmit={handleSubmit}>
-                        <NoteCreateButton
-                            onClick={() => form.reset()}
-                            text="Clear"
-                            color="red"
-                        />
-                        <NoteCreateButton
-                            onClick={() => setStatus("pending")}
-                            text="Future"
-                            color="primary"
-                        />
-                        <NoteCreateButton
-                            onClick={() => setStatus("confirmed")}
-                            text="Confirm"
-                            color="primary"
-                        />
-                        <div className="fields">
-                            <Heart
-                                onClick={() => setIsFavorite((prev) => !prev)}
-                                isFavorite={isFavorite}
-                                style={{ paddingTop: "0.35rem" }}
-                            />
-                            <NoteField>
-                                <Field
-                                    name="content"
-                                    component={renderInput}
-                                    placeholder="Author"
-                                    onBlur={(e) => {
-                                        if (e.target.value)
-                                            form.mutators.trimValue("content");
-                                    }}
-                                    validate={validate}
+        <>
+            {show ? (
+                <div
+                    className="ui segment"
+                    style={{
+                        position: "fixed",
+                        zIndex: "2",
+                        bottom: "0",
+                        width: "949.5px",
+                    }}
+                >
+                    <Form
+                        onSubmit={onFormSubmit}
+                        mutators={{
+                            trimValue: ([field, _], state, { changeValue }) => {
+                                changeValue(state, field, (prev) =>
+                                    prev.trim()
+                                );
+                            },
+                        }}
+                    >
+                        {({ handleSubmit, form }) => (
+                            <form className="ui form" onSubmit={handleSubmit}>
+                                <button
+                                    onClick={() => setShow(false)}
+                                    className="right floated ui button icon"
+                                >
+                                    <i className="eye slash icon" />
+                                </button>
+                                <NoteCreateButton
+                                    onClick={() => form.reset()}
+                                    text="Clear"
+                                    color="red"
                                 />
-                            </NoteField>
-                            <NoteField>
-                                <Field
-                                    name="comment"
-                                    component={renderInput}
-                                    placeholder="Comment"
-                                    onBlur={(e) => {
-                                        if (e.target.value)
-                                            form.mutators.trimValue("comment");
-                                    }}
+                                <NoteCreateButton
+                                    onClick={() => setStatus("pending")}
+                                    text="Future"
+                                    color="primary"
                                 />
-                            </NoteField>
-                        </div>
-                    </form>
-                )}
-            </Form>
-        </div>
+                                <NoteCreateButton
+                                    onClick={() => setStatus("confirmed")}
+                                    text="Confirm"
+                                    color="primary"
+                                />
+                                <div className="fields">
+                                    <Heart
+                                        onClick={() =>
+                                            setIsFavorite((prev) => !prev)
+                                        }
+                                        isFavorite={isFavorite}
+                                        style={{ paddingTop: "0.35rem" }}
+                                    />
+                                    <NoteField>
+                                        <Field
+                                            name="content"
+                                            component={renderInput}
+                                            placeholder="Author"
+                                            onBlur={(e) => {
+                                                if (e.target.value)
+                                                    form.mutators.trimValue(
+                                                        "content"
+                                                    );
+                                            }}
+                                            validate={validate}
+                                        />
+                                    </NoteField>
+                                    <NoteField>
+                                        <Field
+                                            name="comment"
+                                            component={renderInput}
+                                            placeholder="Comment"
+                                            onBlur={(e) => {
+                                                if (e.target.value)
+                                                    form.mutators.trimValue(
+                                                        "comment"
+                                                    );
+                                            }}
+                                        />
+                                    </NoteField>
+                                </div>
+                            </form>
+                        )}
+                    </Form>
+                </div>
+            ) : (
+                <button
+                    className="ui button icon"
+                    style={{
+                        position: "fixed",
+                        zIndex: "2",
+                        bottom: "14px",
+                    }}
+                    onClick={() => setShow(true)}
+                >
+                    <i className="eye icon" />
+                </button>
+            )}
+        </>
     );
 };
 
