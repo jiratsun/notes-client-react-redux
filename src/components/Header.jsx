@@ -22,7 +22,8 @@ const Header = () => {
     const dispatch = useDispatch();
 
     const create = (name) => {
-        if (name === collection) return () => setCollectionInput("");
+        if (name === collection || name === "")
+            return () => setCollectionInput("");
         const found = books.find((book) => book === name);
         if (found)
             return () => {
