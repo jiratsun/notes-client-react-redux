@@ -17,7 +17,7 @@ const Header = () => {
     const [collectionInput, setCollectionInput] = useState("");
     const [showDropdown, setShowDropdown] = useState(false);
     const collection = useSelector((state) => state.collection);
-    const latestNote = Object.values(useSelector((state) => state.notes))[0];
+    const notes = Object.values(useSelector((state) => state.notes));
     const books = useBooks();
     const dispatch = useDispatch();
 
@@ -61,7 +61,8 @@ const Header = () => {
                 </div>
             </div>
             <div className="right menu">
-                <div className="item">{renderTime(latestNote)}</div>
+                <div className="item">Total Notes: {notes.length}</div>
+                <div className="item">{renderTime(notes[0])}</div>
                 <div className="item">
                     <button
                         onClick={() => window.scrollTo(0, 0)}
