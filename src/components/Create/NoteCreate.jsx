@@ -66,7 +66,7 @@ const NoteCreate = () => {
             className="ui segment"
             style={{
                 position: "fixed",
-                zIndex: "1",
+                zIndex: "2",
                 bottom: "0",
                 width: "949.5px",
             }}
